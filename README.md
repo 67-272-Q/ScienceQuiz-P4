@@ -66,6 +66,7 @@ These checkpoints are minimal requirements -- **if all you do is the minimum, it
 Good luck!
 
 ![](image.png)
+
 _Image credit: https://www.slickwords.com/keep-going-you-are-getting-there/_
 
 
