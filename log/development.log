@@ -1,0 +1,808 @@
+Started GET "/" for ::1 at 2021-04-07 11:13:33 +0300
+
+ActiveRecord::PendingMigrationError - Migrations are pending. To resolve this issue, run:
+        bin/rails db:migrate RAILS_ENV=development:
+
+Started POST "/__better_errors/e949b09db262e801/variables" for ::1 at 2021-04-07 11:13:34 +0300
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  ↳ bin/rails:9
+  [1m[35m (4.0ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL PRIMARY KEY)[0m
+  ↳ bin/rails:9
+  [1m[35m (2.0ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" varchar NOT NULL PRIMARY KEY, "value" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  ↳ bin/rails:9
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  ↳ bin/rails:9
+Migrating to CreateOrganizations (20210108191605)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ bin/rails:9
+  [1m[35m (7.5ms)[0m  [1m[35mCREATE TABLE "organizations" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "street_1" varchar, "street_2" varchar, "city" varchar, "state" varchar, "zip" varchar, "short_name" varchar, "active" boolean DEFAULT 1, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  ↳ db/migrate/20210108191605_create_organizations.rb:3
+  [1m[36mActiveRecord::SchemaMigration Create (0.7ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20210108191605"]]
+  ↳ bin/rails:9
+  [1m[35m (9.8ms)[0m  [1m[36mcommit transaction[0m
+  ↳ bin/rails:9
+Migrating to CreateTeams (20210108200846)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ bin/rails:9
+  [1m[35m (7.6ms)[0m  [1m[35mCREATE TABLE "teams" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "organization_id" integer, "division" varchar, "active" boolean DEFAULT 1, CONSTRAINT "fk_rails_f07f0bd66d"
+FOREIGN KEY ("organization_id")
+  REFERENCES "organizations" ("id")
+)[0m
+  ↳ db/migrate/20210108200846_create_teams.rb:3
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE  INDEX "index_teams_on_organization_id" ON "teams" ("organization_id")[0m
+  ↳ db/migrate/20210108200846_create_teams.rb:3
+  [1m[36mActiveRecord::SchemaMigration Create (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20210108200846"]]
+  ↳ bin/rails:9
+  [1m[35m (1.7ms)[0m  [1m[36mcommit transaction[0m
+  ↳ bin/rails:9
+Migrating to CreateStudents (20210108200938)
+  [1m[35m (0.2ms)[0m  [1m[36mbegin transaction[0m
+  ↳ bin/rails:9
+  [1m[35m (2.4ms)[0m  [1m[35mCREATE TABLE "students" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "first_name" varchar, "last_name" varchar, "grade" integer, "organization_id" integer, "active" boolean DEFAULT 1, CONSTRAINT "fk_rails_2c3c300d44"
+FOREIGN KEY ("organization_id")
+  REFERENCES "organizations" ("id")
+)[0m
+  ↳ db/migrate/20210108200938_create_students.rb:3
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE  INDEX "index_students_on_organization_id" ON "students" ("organization_id")[0m
+  ↳ db/migrate/20210108200938_create_students.rb:3
+  [1m[36mActiveRecord::SchemaMigration Create (0.6ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20210108200938"]]
+  ↳ bin/rails:9
+  [1m[35m (5.1ms)[0m  [1m[36mcommit transaction[0m
+  ↳ bin/rails:9
+Migrating to CreateStudentTeams (20210108201029)
+  [1m[35m (0.4ms)[0m  [1m[36mbegin transaction[0m
+  ↳ bin/rails:9
+  [1m[35m (0.9ms)[0m  [1m[35mCREATE TABLE "student_teams" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "student_id" integer, "team_id" integer, "start_date" date, "end_date" date, "position" integer, "active" boolean DEFAULT 1, CONSTRAINT "fk_rails_a55c3880f2"
+FOREIGN KEY ("student_id")
+  REFERENCES "students" ("id")
+, CONSTRAINT "fk_rails_8299e376e9"
+FOREIGN KEY ("team_id")
+  REFERENCES "teams" ("id")
+)[0m
+  ↳ db/migrate/20210108201029_create_student_teams.rb:3
+  [1m[35m (0.5ms)[0m  [1m[35mCREATE  INDEX "index_student_teams_on_student_id" ON "student_teams" ("student_id")[0m
+  ↳ db/migrate/20210108201029_create_student_teams.rb:3
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE  INDEX "index_student_teams_on_team_id" ON "student_teams" ("team_id")[0m
+  ↳ db/migrate/20210108201029_create_student_teams.rb:3
+  [1m[36mActiveRecord::SchemaMigration Create (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20210108201029"]]
+  ↳ bin/rails:9
+  [1m[35m (1.6ms)[0m  [1m[36mcommit transaction[0m
+  ↳ bin/rails:9
+  [1m[36mActiveRecord::InternalMetadata Load (0.5ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  ↳ bin/rails:9
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ bin/rails:9
+  [1m[36mActiveRecord::InternalMetadata Create (1.5ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["key", "environment"], ["value", "development"], ["created_at", "2021-04-07 08:14:17.607688"], ["updated_at", "2021-04-07 08:14:17.607688"]]
+  ↳ bin/rails:9
+  [1m[35m (2.4ms)[0m  [1m[36mcommit transaction[0m
+  ↳ bin/rails:9
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  ↳ bin/rails:9
+Started GET "/" for ::1 at 2021-04-07 11:16:09 +0300
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  ↳ /Users/hbouamor/.rvm/gems/ruby-2.6.3/gems/activerecord-5.2.4.4/lib/active_record/log_subscriber.rb:98
+
+ActionController::RoutingError - uninitialized constant HomeController:
+
+Started POST "/__better_errors/39077ada608bf7b8/variables" for ::1 at 2021-04-07 11:16:10 +0300
+Started GET "/" for ::1 at 2021-04-07 11:18:51 +0300
+Processing by HomeController#index as HTML
+  Rendering home/index.html.erb within layouts/application
+  Rendered home/index.html.erb within layouts/application (5.1ms)
+  Rendered partials/_topbar.html.erb (0.9ms)
+  Rendered partials/_nav.html.erb (0.5ms)
+  Rendered partials/_flash.html.erb (0.5ms)
+  Rendered partials/_footer.html.erb (0.9ms)
+Completed 200 OK in 8101ms (Views: 8086.7ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/organizations" for ::1 at 2021-04-07 11:19:19 +0300
+Processing by OrganizationsController#index as HTML
+  Rendering organizations/index.html.erb within layouts/application
+  [1m[35m (0.6ms)[0m  [1m[34mSELECT COUNT(*) FROM "organizations" WHERE "organizations"."active" = ?[0m  [["active", 1]]
+  ↳ app/views/organizations/_active_organizations.html.erb:1
+  Rendered organizations/_active_organizations.html.erb (9.1ms)
+  [1m[36mOrganization Exists (0.4ms)[0m  [1m[34mSELECT  1 AS one FROM "organizations" WHERE "organizations"."active" != ? LIMIT ?[0m  [["active", 1], ["LIMIT", 1]]
+  ↳ app/views/organizations/_inactive_organizations.html.erb:1
+  Rendered organizations/_inactive_organizations.html.erb (3.5ms)
+  Rendered partials/_add_new_object.html.erb (0.9ms)
+  Rendered partials/_index_structure.html.erb (30.4ms)
+  Rendered organizations/index.html.erb within layouts/application (35.9ms)
+  Rendered partials/_topbar.html.erb (0.4ms)
+  Rendered partials/_nav.html.erb (0.4ms)
+  Rendered partials/_flash.html.erb (2.1ms)
+  Rendered partials/_footer.html.erb (0.8ms)
+Completed 200 OK in 183ms (Views: 132.5ms | ActiveRecord: 1.7ms)
+
+
+Started GET "/organizations/new" for ::1 at 2021-04-07 11:19:20 +0300
+Processing by OrganizationsController#new as HTML
+  Rendering organizations/new.html.erb within layouts/application
+Started GET "/organizations/new" for ::1 at 2021-04-07 11:19:22 +0300
+Processing by OrganizationsController#new as HTML
+  Rendering organizations/new.html.erb within layouts/application
+  Rendered organizations/_organization_fields.html.erb (3532.8ms)
+  Rendered partials/_form_structure.html.erb (3741.0ms)
+  Rendered organizations/new.html.erb within layouts/application (3755.2ms)
+  Rendered organizations/_organization_fields.html.erb (1986.0ms)
+  Rendered partials/_form_structure.html.erb (2000.2ms)
+  Rendered organizations/new.html.erb within layouts/application (2007.8ms)
+  Rendered partials/_topbar.html.erb (0.4ms)
+  Rendered partials/_nav.html.erb (0.4ms)
+  Rendered partials/_flash.html.erb (0.3ms)
+  Rendered partials/_footer.html.erb (0.5ms)
+Completed 200 OK in 4286ms (Views: 4265.4ms | ActiveRecord: 0.7ms)
+
+
+  Rendered partials/_topbar.html.erb (0.4ms)
+  Rendered partials/_nav.html.erb (0.3ms)
+  Rendered partials/_flash.html.erb (0.4ms)
+  Rendered partials/_footer.html.erb (0.4ms)
+Completed 200 OK in 2210ms (Views: 2204.2ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/teams" for ::1 at 2021-04-07 11:19:26 +0300
+Processing by TeamsController#index as HTML
+  Rendering teams/index.html.erb within layouts/application
+  [1m[35m (0.8ms)[0m  [1m[34mSELECT COUNT(*) FROM "teams" WHERE "teams"."active" = ? AND "teams"."division" = ?[0m  [["active", 1], ["division", "senior"]]
+  ↳ app/views/teams/_active_senior_teams.html.erb:1
+  Rendered teams/_active_senior_teams.html.erb (3.9ms)
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "teams" WHERE "teams"."active" = ? AND "teams"."division" = ?[0m  [["active", 1], ["division", "junior"]]
+  ↳ app/views/teams/_active_junior_teams.html.erb:1
+  Rendered teams/_active_junior_teams.html.erb (2.1ms)
+  [1m[36mTeam Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "teams" WHERE "teams"."active" != ? LIMIT ?[0m  [["active", 1], ["LIMIT", 1]]
+  ↳ app/views/teams/_inactive_teams.html.erb:1
+  Rendered teams/_inactive_teams.html.erb (3.2ms)
+  Rendered partials/_add_new_object.html.erb (0.6ms)
+  Rendered partials/_index_structure.html.erb (34.0ms)
+  Rendered teams/index.html.erb within layouts/application (39.0ms)
+  Rendered partials/_topbar.html.erb (0.4ms)
+  Rendered partials/_nav.html.erb (0.6ms)
+  Rendered partials/_flash.html.erb (0.3ms)
+  Rendered partials/_footer.html.erb (0.8ms)
+Completed 200 OK in 160ms (Views: 125.5ms | ActiveRecord: 1.5ms)
+
+
+Started GET "/students" for ::1 at 2021-04-07 11:19:27 +0300
+Processing by StudentsController#index as HTML
+  Rendering students/index.html.erb within layouts/application
+  [1m[35m (0.8ms)[0m  [1m[34mSELECT COUNT(*) FROM "students" WHERE "students"."active" = ?[0m  [["active", 1]]
+  ↳ app/views/students/_active_students.html.erb:1
+  Rendered students/_active_students.html.erb (3.2ms)
+  [1m[36mStudent Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "students" WHERE "students"."active" != ? LIMIT ?[0m  [["active", 1], ["LIMIT", 1]]
+  ↳ app/views/students/_inactive_students.html.erb:1
+  Rendered students/_inactive_students.html.erb (2.2ms)
+  Rendered partials/_add_new_object.html.erb (0.6ms)
+  Rendered partials/_index_structure.html.erb (20.8ms)
+  Rendered students/index.html.erb within layouts/application (24.4ms)
+  Rendered partials/_topbar.html.erb (0.4ms)
+  Rendered partials/_nav.html.erb (0.5ms)
+  Rendered partials/_flash.html.erb (0.4ms)
+  Rendered partials/_footer.html.erb (1.0ms)
+Completed 200 OK in 185ms (Views: 154.8ms | ActiveRecord: 1.4ms)
+
+
+Started GET "/organizations" for ::1 at 2021-04-07 11:19:28 +0300
+Processing by OrganizationsController#index as HTML
+  Rendering organizations/index.html.erb within layouts/application
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT COUNT(*) FROM "organizations" WHERE "organizations"."active" = ?[0m  [["active", 1]]
+  ↳ app/views/organizations/_active_organizations.html.erb:1
+  Rendered organizations/_active_organizations.html.erb (4.6ms)
+  [1m[36mOrganization Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "organizations" WHERE "organizations"."active" != ? LIMIT ?[0m  [["active", 1], ["LIMIT", 1]]
+  ↳ app/views/organizations/_inactive_organizations.html.erb:1
+  Rendered organizations/_inactive_organizations.html.erb (2.6ms)
+  Rendered partials/_add_new_object.html.erb (0.4ms)
+  Rendered partials/_index_structure.html.erb (15.6ms)
+  Rendered organizations/index.html.erb within layouts/application (20.6ms)
+  Rendered partials/_topbar.html.erb (0.3ms)
+  Rendered partials/_nav.html.erb (1.3ms)
+  Rendered partials/_flash.html.erb (0.5ms)
+  Rendered partials/_footer.html.erb (0.6ms)
+Completed 200 OK in 115ms (Views: 111.2ms | ActiveRecord: 0.5ms)
+
+
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  ↳ lib/tasks/contexts.rake:7
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "environment"]]
+  ↳ lib/tasks/contexts.rake:7
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  ↳ lib/tasks/contexts.rake:7
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "environment"]]
+  ↳ lib/tasks/contexts.rake:7
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  ↳ lib/tasks/contexts.rake:7
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "environment"]]
+  ↳ lib/tasks/contexts.rake:7
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  ↳ lib/tasks/contexts.rake:10
+  [1m[35m (13.1ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL PRIMARY KEY)[0m
+  ↳ lib/tasks/contexts.rake:10
+  [1m[35m (17.9ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" varchar NOT NULL PRIMARY KEY, "value" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  ↳ lib/tasks/contexts.rake:10
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  ↳ lib/tasks/contexts.rake:10
+Migrating to CreateOrganizations (20210108191605)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ lib/tasks/contexts.rake:10
+  [1m[35m (1.0ms)[0m  [1m[35mCREATE TABLE "organizations" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "street_1" varchar, "street_2" varchar, "city" varchar, "state" varchar, "zip" varchar, "short_name" varchar, "active" boolean DEFAULT 1, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  ↳ db/migrate/20210108191605_create_organizations.rb:3
+  [1m[36mActiveRecord::SchemaMigration Create (0.5ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20210108191605"]]
+  ↳ lib/tasks/contexts.rake:10
+  [1m[35m (3.3ms)[0m  [1m[36mcommit transaction[0m
+  ↳ lib/tasks/contexts.rake:10
+Migrating to CreateTeams (20210108200846)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ lib/tasks/contexts.rake:10
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE TABLE "teams" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "organization_id" integer, "division" varchar, "active" boolean DEFAULT 1, CONSTRAINT "fk_rails_f07f0bd66d"
+FOREIGN KEY ("organization_id")
+  REFERENCES "organizations" ("id")
+)[0m
+  ↳ db/migrate/20210108200846_create_teams.rb:3
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE  INDEX "index_teams_on_organization_id" ON "teams" ("organization_id")[0m
+  ↳ db/migrate/20210108200846_create_teams.rb:3
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20210108200846"]]
+  ↳ lib/tasks/contexts.rake:10
+  [1m[35m (1.5ms)[0m  [1m[36mcommit transaction[0m
+  ↳ lib/tasks/contexts.rake:10
+Migrating to CreateStudents (20210108200938)
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  ↳ lib/tasks/contexts.rake:10
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE TABLE "students" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "first_name" varchar, "last_name" varchar, "grade" integer, "organization_id" integer, "active" boolean DEFAULT 1, CONSTRAINT "fk_rails_2c3c300d44"
+FOREIGN KEY ("organization_id")
+  REFERENCES "organizations" ("id")
+)[0m
+  ↳ db/migrate/20210108200938_create_students.rb:3
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE  INDEX "index_students_on_organization_id" ON "students" ("organization_id")[0m
+  ↳ db/migrate/20210108200938_create_students.rb:3
+  [1m[36mActiveRecord::SchemaMigration Create (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20210108200938"]]
+  ↳ lib/tasks/contexts.rake:10
+  [1m[35m (1.2ms)[0m  [1m[36mcommit transaction[0m
+  ↳ lib/tasks/contexts.rake:10
+Migrating to CreateStudentTeams (20210108201029)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ lib/tasks/contexts.rake:10
+  [1m[35m (1.1ms)[0m  [1m[35mCREATE TABLE "student_teams" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "student_id" integer, "team_id" integer, "start_date" date, "end_date" date, "position" integer, "active" boolean DEFAULT 1, CONSTRAINT "fk_rails_a55c3880f2"
+FOREIGN KEY ("student_id")
+  REFERENCES "students" ("id")
+, CONSTRAINT "fk_rails_8299e376e9"
+FOREIGN KEY ("team_id")
+  REFERENCES "teams" ("id")
+)[0m
+  ↳ db/migrate/20210108201029_create_student_teams.rb:3
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE  INDEX "index_student_teams_on_student_id" ON "student_teams" ("student_id")[0m
+  ↳ db/migrate/20210108201029_create_student_teams.rb:3
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE  INDEX "index_student_teams_on_team_id" ON "student_teams" ("team_id")[0m
+  ↳ db/migrate/20210108201029_create_student_teams.rb:3
+  [1m[36mActiveRecord::SchemaMigration Create (0.4ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20210108201029"]]
+  ↳ lib/tasks/contexts.rake:10
+  [1m[35m (2.3ms)[0m  [1m[36mcommit transaction[0m
+  ↳ lib/tasks/contexts.rake:10
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  ↳ lib/tasks/contexts.rake:10
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ lib/tasks/contexts.rake:10
+  [1m[36mActiveRecord::InternalMetadata Create (1.3ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["key", "environment"], ["value", "development"], ["created_at", "2021-04-07 08:19:56.084891"], ["updated_at", "2021-04-07 08:19:56.084891"]]
+  ↳ lib/tasks/contexts.rake:10
+  [1m[35m (1.3ms)[0m  [1m[36mcommit transaction[0m
+  ↳ lib/tasks/contexts.rake:10
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  ↳ lib/tasks/contexts.rake:10
+  [1m[35m (0.4ms)[0m  [1m[35mDROP TABLE IF EXISTS "organizations"[0m
+  ↳ db/schema.rb:15
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  ↳ db/schema.rb:15
+  [1m[35m (1.8ms)[0m  [1m[35mCREATE TABLE "organizations" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "street_1" varchar, "street_2" varchar, "city" varchar, "state" varchar, "zip" varchar, "short_name" varchar, "active" boolean DEFAULT 1, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  ↳ db/schema.rb:15
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "student_teams"[0m
+  ↳ db/schema.rb:28
+  [1m[35m (2.4ms)[0m  [1m[35mCREATE TABLE "student_teams" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "student_id" integer, "team_id" integer, "start_date" date, "end_date" date, "position" integer, "active" boolean DEFAULT 1)[0m
+  ↳ db/schema.rb:28
+  [1m[35m (2.9ms)[0m  [1m[35mCREATE  INDEX "index_student_teams_on_student_id" ON "student_teams" ("student_id")[0m
+  ↳ db/schema.rb:28
+  [1m[35m (2.7ms)[0m  [1m[35mCREATE  INDEX "index_student_teams_on_team_id" ON "student_teams" ("team_id")[0m
+  ↳ db/schema.rb:28
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "students"[0m
+  ↳ db/schema.rb:39
+  [1m[35m (4.0ms)[0m  [1m[35mCREATE TABLE "students" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "first_name" varchar, "last_name" varchar, "grade" integer, "organization_id" integer, "active" boolean DEFAULT 1)[0m
+  ↳ db/schema.rb:39
+  [1m[35m (1.8ms)[0m  [1m[35mCREATE  INDEX "index_students_on_organization_id" ON "students" ("organization_id")[0m
+  ↳ db/schema.rb:39
+  [1m[35m (0.7ms)[0m  [1m[35mDROP TABLE IF EXISTS "teams"[0m
+  ↳ db/schema.rb:48
+  [1m[35m (1.4ms)[0m  [1m[35mCREATE TABLE "teams" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "organization_id" integer, "division" varchar, "active" boolean DEFAULT 1)[0m
+  ↳ db/schema.rb:48
+  [1m[35m (1.7ms)[0m  [1m[35mCREATE  INDEX "index_teams_on_organization_id" ON "teams" ("organization_id")[0m
+  ↳ db/schema.rb:48
+  [1m[35m (5.3ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL PRIMARY KEY)[0m
+  ↳ db/schema.rb:13
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  ↳ db/schema.rb:13
+  [1m[35m (5.5ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES (20210108201029)[0m
+  ↳ db/schema.rb:13
+  [1m[35m (2.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES
+(20210108191605),
+(20210108200846),
+(20210108200938);
+
+[0m
+  ↳ db/schema.rb:13
+  [1m[35m (2.5ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" varchar NOT NULL PRIMARY KEY, "value" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  ↳ db/schema.rb:13
+  [1m[36mActiveRecord::InternalMetadata Load (0.3ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  ↳ db/schema.rb:13
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ db/schema.rb:13
+  [1m[36mActiveRecord::InternalMetadata Create (1.1ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["key", "environment"], ["value", "development"], ["created_at", "2021-04-07 08:19:56.263162"], ["updated_at", "2021-04-07 08:19:56.263162"]]
+  ↳ db/schema.rb:13
+  [1m[35m (1.4ms)[0m  [1m[36mcommit transaction[0m
+  ↳ db/schema.rb:13
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  ↳ lib/tasks/contexts.rake:12
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ lib/tasks/contexts.rake:12
+  [1m[36mActiveRecord::InternalMetadata Update (1.2ms)[0m  [1m[33mUPDATE "ar_internal_metadata" SET "value" = ?, "updated_at" = ? WHERE "ar_internal_metadata"."key" = ?[0m  [["value", "test"], ["updated_at", "2021-04-07 08:19:56.290168"], ["key", "environment"]]
+  ↳ lib/tasks/contexts.rake:12
+  [1m[35m (2.3ms)[0m  [1m[36mcommit transaction[0m
+  ↳ lib/tasks/contexts.rake:12
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ test/sets/organizations.rb:5
+  [1m[36mOrganization Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "organizations" WHERE LOWER("organizations"."short_name") = LOWER(?) LIMIT ?[0m  [["short_name", "Millvale"], ["LIMIT", 1]]
+  ↳ test/sets/organizations.rb:5
+  [1m[36mOrganization Create (0.5ms)[0m  [1m[32mINSERT INTO "organizations" ("name", "street_1", "city", "state", "zip", "short_name", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?)[0m  [["name", "Millvale Alliance"], ["street_1", "10 Sherman St"], ["city", "Pittsburgh"], ["state", "PA"], ["zip", "15209"], ["short_name", "Millvale"], ["created_at", "2021-04-07 08:19:56.449515"], ["updated_at", "2021-04-07 08:19:56.449515"]]
+  ↳ test/sets/organizations.rb:5
+  [1m[35m (2.0ms)[0m  [1m[36mcommit transaction[0m
+  ↳ test/sets/organizations.rb:5
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  ↳ test/sets/organizations.rb:6
+  [1m[36mOrganization Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "organizations" WHERE LOWER("organizations"."short_name") = LOWER(?) LIMIT ?[0m  [["short_name", "Uniontown"], ["LIMIT", 1]]
+  ↳ test/sets/organizations.rb:6
+  [1m[36mOrganization Create (153.8ms)[0m  [1m[32mINSERT INTO "organizations" ("name", "street_1", "city", "state", "zip", "short_name", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?)[0m  [["name", "Uniontown Alliance"], ["street_1", "123 Matthew Dr"], ["city", "Uniontown"], ["state", "PA"], ["zip", "15401"], ["short_name", "Uniontown"], ["created_at", "2021-04-07 08:19:56.459292"], ["updated_at", "2021-04-07 08:19:56.459292"]]
+  ↳ test/sets/organizations.rb:6
+  [1m[35m (4.0ms)[0m  [1m[36mcommit transaction[0m
+  ↳ test/sets/organizations.rb:6
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ test/sets/organizations.rb:7
+  [1m[36mOrganization Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "organizations" WHERE LOWER("organizations"."short_name") = LOWER(?) LIMIT ?[0m  [["short_name", "Cinder"], ["LIMIT", 1]]
+  ↳ test/sets/organizations.rb:7
+  [1m[36mOrganization Create (0.6ms)[0m  [1m[32mINSERT INTO "organizations" ("name", "street_1", "city", "state", "zip", "short_name", "active", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)[0m  [["name", "Cinderlands Alliance"], ["street_1", "2601 Smallman St"], ["city", "Pittsburgh"], ["state", "PA"], ["zip", "15222"], ["short_name", "Cinder"], ["active", 0], ["created_at", "2021-04-07 08:19:56.655509"], ["updated_at", "2021-04-07 08:19:56.655509"]]
+  ↳ test/sets/organizations.rb:7
+  [1m[35m (5.1ms)[0m  [1m[36mcommit transaction[0m
+  ↳ test/sets/organizations.rb:7
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  ↳ test/sets/organizations.rb:8
+  [1m[36mOrganization Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "organizations" WHERE LOWER("organizations"."short_name") = LOWER(?) LIMIT ?[0m  [["short_name", "ACAC"], ["LIMIT", 1]]
+  ↳ test/sets/organizations.rb:8
+  [1m[36mOrganization Create (0.5ms)[0m  [1m[32mINSERT INTO "organizations" ("name", "street_1", "city", "state", "zip", "short_name", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?)[0m  [["name", "Allegheny Center Alliance"], ["street_1", "250 East Ohio St"], ["city", "Pittsburgh"], ["state", "PA"], ["zip", "15212"], ["short_name", "ACAC"], ["created_at", "2021-04-07 08:19:56.689220"], ["updated_at", "2021-04-07 08:19:56.689220"]]
+  ↳ test/sets/organizations.rb:8
+  [1m[35m (1.6ms)[0m  [1m[36mcommit transaction[0m
+  ↳ test/sets/organizations.rb:8
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ test/sets/organizations.rb:9
+  [1m[36mOrganization Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "organizations" WHERE LOWER("organizations"."short_name") = LOWER(?) LIMIT ?[0m  [["short_name", "SQ"], ["LIMIT", 1]]
+  ↳ test/sets/organizations.rb:9
+  [1m[36mOrganization Create (0.5ms)[0m  [1m[32mINSERT INTO "organizations" ("name", "street_1", "city", "state", "zip", "short_name", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?)[0m  [["name", "ScienceQuiz"], ["street_1", "10152 Sudberry Dr"], ["city", "Wexford"], ["state", "PA"], ["zip", "15090"], ["short_name", "SQ"], ["created_at", "2021-04-07 08:19:56.702609"], ["updated_at", "2021-04-07 08:19:56.702609"]]
+  ↳ test/sets/organizations.rb:9
+  [1m[35m (2.6ms)[0m  [1m[36mcommit transaction[0m
+  ↳ test/sets/organizations.rb:9
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ test/sets/organizations.rb:12
+  [1m[36mOrganization Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "organizations" WHERE LOWER("organizations"."short_name") = LOWER(?) AND "organizations"."id" != ? LIMIT ?[0m  [["short_name", "ACAC"], ["id", 4], ["LIMIT", 1]]
+  ↳ test/sets/organizations.rb:12
+  [1m[36mOrganization Update (21.3ms)[0m  [1m[33mUPDATE "organizations" SET "created_at" = ?, "updated_at" = ? WHERE "organizations"."id" = ?[0m  [["created_at", "2020-04-07 04:00:00"], ["updated_at", "2021-04-07 08:19:56.715901"], ["id", 4]]
+  ↳ test/sets/organizations.rb:12
+  [1m[35m (1.4ms)[0m  [1m[36mcommit transaction[0m
+  ↳ test/sets/organizations.rb:12
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ test/sets/teams.rb:5
+  [1m[36mOrganization Load (0.2ms)[0m  [1m[34mSELECT "organizations".* FROM "organizations" WHERE "organizations"."active" = ?[0m  [["active", 1]]
+  ↳ lib/helpers/validations.rb:20
+  [1m[36mTeam Create (0.8ms)[0m  [1m[32mINSERT INTO "teams" ("name", "organization_id", "division") VALUES (?, ?, ?)[0m  [["name", "ACAC 1"], ["organization_id", 4], ["division", "senior"]]
+  ↳ test/sets/teams.rb:5
+  [1m[35m (1.3ms)[0m  [1m[36mcommit transaction[0m
+  ↳ test/sets/teams.rb:5
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ test/sets/teams.rb:6
+  [1m[36mOrganization Load (0.2ms)[0m  [1m[34mSELECT "organizations".* FROM "organizations" WHERE "organizations"."active" = ?[0m  [["active", 1]]
+  ↳ lib/helpers/validations.rb:20
+  [1m[36mTeam Create (0.8ms)[0m  [1m[32mINSERT INTO "teams" ("name", "organization_id", "division") VALUES (?, ?, ?)[0m  [["name", "Millvale 1"], ["organization_id", 1], ["division", "junior"]]
+  ↳ test/sets/teams.rb:6
+  [1m[35m (1.4ms)[0m  [1m[36mcommit transaction[0m
+  ↳ test/sets/teams.rb:6
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ test/sets/teams.rb:7
+  [1m[36mOrganization Load (0.3ms)[0m  [1m[34mSELECT "organizations".* FROM "organizations" WHERE "organizations"."active" = ?[0m  [["active", 1]]
+  ↳ lib/helpers/validations.rb:20
+  [1m[36mTeam Create (0.9ms)[0m  [1m[32mINSERT INTO "teams" ("name", "organization_id", "division", "active") VALUES (?, ?, ?, ?)[0m  [["name", "ACAC 4"], ["organization_id", 4], ["division", "senior"], ["active", 0]]
+  ↳ test/sets/teams.rb:7
+  [1m[35m (1.8ms)[0m  [1m[36mcommit transaction[0m
+  ↳ test/sets/teams.rb:7
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ test/sets/students.rb:6
+  [1m[36mOrganization Load (0.2ms)[0m  [1m[34mSELECT "organizations".* FROM "organizations" WHERE "organizations"."active" = ?[0m  [["active", 1]]
+  ↳ lib/helpers/validations.rb:20
+  [1m[36mStudent Create (0.8ms)[0m  [1m[32mINSERT INTO "students" ("first_name", "last_name", "grade", "organization_id") VALUES (?, ?, ?, ?)[0m  [["first_name", "Ellie"], ["last_name", "Wilshire"], ["grade", 9], ["organization_id", 4]]
+  ↳ test/sets/students.rb:6
+  [1m[35m (2.4ms)[0m  [1m[36mcommit transaction[0m
+  ↳ test/sets/students.rb:6
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ test/sets/students.rb:7
+  [1m[36mOrganization Load (0.2ms)[0m  [1m[34mSELECT "organizations".* FROM "organizations" WHERE "organizations"."active" = ?[0m  [["active", 1]]
+  ↳ lib/helpers/validations.rb:20
+  [1m[36mStudent Create (0.9ms)[0m  [1m[32mINSERT INTO "students" ("first_name", "last_name", "grade", "organization_id") VALUES (?, ?, ?, ?)[0m  [["first_name", "Anna"], ["last_name", "Davis"], ["grade", 7], ["organization_id", 4]]
+  ↳ test/sets/students.rb:7
+  [1m[35m (2.6ms)[0m  [1m[36mcommit transaction[0m
+  ↳ test/sets/students.rb:7
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ test/sets/students.rb:8
+  [1m[36mOrganization Load (0.2ms)[0m  [1m[34mSELECT "organizations".* FROM "organizations" WHERE "organizations"."active" = ?[0m  [["active", 1]]
+  ↳ lib/helpers/validations.rb:20
+  [1m[36mStudent Create (0.6ms)[0m  [1m[32mINSERT INTO "students" ("first_name", "last_name", "grade", "organization_id", "active") VALUES (?, ?, ?, ?, ?)[0m  [["first_name", "Rachel"], ["last_name", "Heimann"], ["grade", 8], ["organization_id", 4], ["active", 0]]
+  ↳ test/sets/students.rb:8
+  [1m[35m (1.8ms)[0m  [1m[36mcommit transaction[0m
+  ↳ test/sets/students.rb:8
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ test/sets/students.rb:11
+  [1m[36mOrganization Load (0.1ms)[0m  [1m[34mSELECT "organizations".* FROM "organizations" WHERE "organizations"."active" = ?[0m  [["active", 1]]
+  ↳ lib/helpers/validations.rb:20
+  [1m[36mStudent Create (1.3ms)[0m  [1m[32mINSERT INTO "students" ("first_name", "last_name", "grade", "organization_id") VALUES (?, ?, ?, ?)[0m  [["first_name", "MJ"], ["last_name", "Nelson"], ["grade", 5], ["organization_id", 1]]
+  ↳ test/sets/students.rb:11
+  [1m[35m (1.3ms)[0m  [1m[36mcommit transaction[0m
+  ↳ test/sets/students.rb:11
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ test/sets/students.rb:12
+  [1m[36mOrganization Load (0.1ms)[0m  [1m[34mSELECT "organizations".* FROM "organizations" WHERE "organizations"."active" = ?[0m  [["active", 1]]
+  ↳ lib/helpers/validations.rb:20
+  [1m[36mStudent Create (0.9ms)[0m  [1m[32mINSERT INTO "students" ("first_name", "last_name", "grade", "organization_id") VALUES (?, ?, ?, ?)[0m  [["first_name", "Mason"], ["last_name", "Moon"], ["grade", 4], ["organization_id", 1]]
+  ↳ test/sets/students.rb:12
+  [1m[35m (2.1ms)[0m  [1m[36mcommit transaction[0m
+  ↳ test/sets/students.rb:12
+  [1m[35m (0.7ms)[0m  [1m[36mbegin transaction[0m
+  ↳ test/sets/students.rb:13
+  [1m[36mOrganization Load (0.2ms)[0m  [1m[34mSELECT "organizations".* FROM "organizations" WHERE "organizations"."active" = ?[0m  [["active", 1]]
+  ↳ lib/helpers/validations.rb:20
+  [1m[36mStudent Create (0.8ms)[0m  [1m[32mINSERT INTO "students" ("first_name", "last_name", "grade", "organization_id") VALUES (?, ?, ?, ?)[0m  [["first_name", "Amelia"], ["last_name", "Smith"], ["grade", 3], ["organization_id", 1]]
+  ↳ test/sets/students.rb:13
+  [1m[35m (1.3ms)[0m  [1m[36mcommit transaction[0m
+  ↳ test/sets/students.rb:13
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ test/sets/student_teams.rb:5
+  [1m[36mStudent Load (0.2ms)[0m  [1m[34mSELECT "students".* FROM "students" WHERE "students"."active" = ?[0m  [["active", 1]]
+  ↳ lib/helpers/validations.rb:20
+  [1m[36mTeam Load (0.1ms)[0m  [1m[34mSELECT "teams".* FROM "teams" WHERE "teams"."active" = ?[0m  [["active", 1]]
+  ↳ lib/helpers/validations.rb:20
+  [1m[36mStudentTeam Load (0.1ms)[0m  [1m[34mSELECT  "student_teams".* FROM "student_teams" WHERE "student_teams"."student_id" = ? AND (end_date IS NULL) ORDER BY "student_teams"."id" ASC LIMIT ?[0m  [["student_id", 1], ["LIMIT", 1]]
+  ↳ app/models/student_team.rb:44
+  [1m[36mStudentTeam Create (0.8ms)[0m  [1m[32mINSERT INTO "student_teams" ("student_id", "team_id", "start_date", "position") VALUES (?, ?, ?, ?)[0m  [["student_id", 1], ["team_id", 1], ["start_date", "2020-11-18"], ["position", 1]]
+  ↳ test/sets/student_teams.rb:5
+  [1m[35m (3.9ms)[0m  [1m[36mcommit transaction[0m
+  ↳ test/sets/student_teams.rb:5
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ test/sets/student_teams.rb:6
+  [1m[36mStudent Load (0.2ms)[0m  [1m[34mSELECT "students".* FROM "students" WHERE "students"."active" = ?[0m  [["active", 1]]
+  ↳ lib/helpers/validations.rb:20
+  [1m[36mTeam Load (0.1ms)[0m  [1m[34mSELECT "teams".* FROM "teams" WHERE "teams"."active" = ?[0m  [["active", 1]]
+  ↳ lib/helpers/validations.rb:20
+  [1m[36mStudentTeam Load (0.1ms)[0m  [1m[34mSELECT  "student_teams".* FROM "student_teams" WHERE "student_teams"."student_id" = ? AND (end_date IS NULL) ORDER BY "student_teams"."id" ASC LIMIT ?[0m  [["student_id", 2], ["LIMIT", 1]]
+  ↳ app/models/student_team.rb:44
+  [1m[36mStudentTeam Create (0.7ms)[0m  [1m[32mINSERT INTO "student_teams" ("student_id", "team_id", "start_date", "position") VALUES (?, ?, ?, ?)[0m  [["student_id", 2], ["team_id", 1], ["start_date", "2020-11-25"], ["position", 2]]
+  ↳ test/sets/student_teams.rb:6
+  [1m[35m (1.3ms)[0m  [1m[36mcommit transaction[0m
+  ↳ test/sets/student_teams.rb:6
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  ↳ test/sets/student_teams.rb:8
+  [1m[36mStudent Load (0.3ms)[0m  [1m[34mSELECT "students".* FROM "students" WHERE "students"."active" = ?[0m  [["active", 1]]
+  ↳ lib/helpers/validations.rb:20
+  [1m[36mTeam Load (0.1ms)[0m  [1m[34mSELECT "teams".* FROM "teams" WHERE "teams"."active" = ?[0m  [["active", 1]]
+  ↳ lib/helpers/validations.rb:20
+  [1m[36mStudentTeam Load (0.2ms)[0m  [1m[34mSELECT  "student_teams".* FROM "student_teams" WHERE "student_teams"."student_id" = ? AND (end_date IS NULL) ORDER BY "student_teams"."id" ASC LIMIT ?[0m  [["student_id", 5], ["LIMIT", 1]]
+  ↳ app/models/student_team.rb:44
+  [1m[36mStudentTeam Create (0.7ms)[0m  [1m[32mINSERT INTO "student_teams" ("student_id", "team_id", "start_date", "position") VALUES (?, ?, ?, ?)[0m  [["student_id", 5], ["team_id", 2], ["start_date", "2020-12-16"], ["position", 2]]
+  ↳ test/sets/student_teams.rb:8
+  [1m[35m (1.3ms)[0m  [1m[36mcommit transaction[0m
+  ↳ test/sets/student_teams.rb:8
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  ↳ test/sets/student_teams.rb:9
+  [1m[36mStudent Load (0.1ms)[0m  [1m[34mSELECT "students".* FROM "students" WHERE "students"."active" = ?[0m  [["active", 1]]
+  ↳ lib/helpers/validations.rb:20
+  [1m[36mTeam Load (0.1ms)[0m  [1m[34mSELECT "teams".* FROM "teams" WHERE "teams"."active" = ?[0m  [["active", 1]]
+  ↳ lib/helpers/validations.rb:20
+  [1m[36mStudentTeam Load (0.2ms)[0m  [1m[34mSELECT  "student_teams".* FROM "student_teams" WHERE "student_teams"."student_id" = ? AND (end_date IS NULL) ORDER BY "student_teams"."id" ASC LIMIT ?[0m  [["student_id", 4], ["LIMIT", 1]]
+  ↳ app/models/student_team.rb:44
+  [1m[36mStudentTeam Create (0.7ms)[0m  [1m[32mINSERT INTO "student_teams" ("student_id", "team_id", "start_date", "position") VALUES (?, ?, ?, ?)[0m  [["student_id", 4], ["team_id", 2], ["start_date", "2020-12-09"], ["position", 1]]
+  ↳ test/sets/student_teams.rb:9
+  [1m[35m (1.5ms)[0m  [1m[36mcommit transaction[0m
+  ↳ test/sets/student_teams.rb:9
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ test/sets/student_teams.rb:10
+  [1m[36mStudent Load (0.2ms)[0m  [1m[34mSELECT "students".* FROM "students" WHERE "students"."active" = ?[0m  [["active", 1]]
+  ↳ lib/helpers/validations.rb:20
+  [1m[36mTeam Load (0.1ms)[0m  [1m[34mSELECT "teams".* FROM "teams" WHERE "teams"."active" = ?[0m  [["active", 1]]
+  ↳ lib/helpers/validations.rb:20
+  [1m[36mStudentTeam Load (0.1ms)[0m  [1m[34mSELECT  "student_teams".* FROM "student_teams" WHERE "student_teams"."student_id" = ? AND (end_date IS NULL) ORDER BY "student_teams"."id" ASC LIMIT ?[0m  [["student_id", 6], ["LIMIT", 1]]
+  ↳ app/models/student_team.rb:44
+  [1m[36mStudentTeam Create (0.9ms)[0m  [1m[32mINSERT INTO "student_teams" ("student_id", "team_id", "start_date", "position", "active") VALUES (?, ?, ?, ?, ?)[0m  [["student_id", 6], ["team_id", 2], ["start_date", "2020-12-23"], ["position", 3], ["active", 0]]
+  ↳ test/sets/student_teams.rb:10
+  [1m[35m (3.4ms)[0m  [1m[36mcommit transaction[0m
+  ↳ test/sets/student_teams.rb:10
+Started GET "/students" for ::1 at 2021-04-07 11:20:34 +0300
+Processing by StudentsController#index as HTML
+  Rendering students/index.html.erb within layouts/application
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT COUNT(*) FROM "students" WHERE "students"."active" = ?[0m  [["active", 1]]
+  ↳ app/views/students/_active_students.html.erb:1
+  [1m[36mStudent Load (0.3ms)[0m  [1m[34mSELECT  "students".* FROM "students" WHERE "students"."active" = ? ORDER BY last_name, first_name LIMIT ? OFFSET ?[0m  [["active", 1], ["LIMIT", 10], ["OFFSET", 0]]
+  ↳ app/views/students/_active_students.html.erb:14
+  [1m[36mOrganization Load (0.3ms)[0m  [1m[34mSELECT  "organizations".* FROM "organizations" WHERE "organizations"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  ↳ app/views/students/_active_students.html.erb:17
+  [1m[36mStudentTeam Exists (0.3ms)[0m  [1m[34mSELECT  1 AS one FROM "student_teams" WHERE "student_teams"."student_id" = ? AND (end_date IS NULL) LIMIT ?[0m  [["student_id", 2], ["LIMIT", 1]]
+  ↳ app/models/student.rb:39
+  [1m[36mStudentTeam Load (0.1ms)[0m  [1m[34mSELECT  "student_teams".* FROM "student_teams" WHERE "student_teams"."student_id" = ? AND (end_date IS NULL) ORDER BY "student_teams"."id" ASC LIMIT ?[0m  [["student_id", 2], ["LIMIT", 1]]
+  ↳ app/models/student.rb:40
+  [1m[36mTeam Load (0.2ms)[0m  [1m[34mSELECT  "teams".* FROM "teams" WHERE "teams"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/models/student.rb:40
+  [1m[36mCACHE StudentTeam Exists (0.0ms)[0m  [1m[34mSELECT  1 AS one FROM "student_teams" WHERE "student_teams"."student_id" = ? AND (end_date IS NULL) LIMIT ?[0m  [["student_id", 2], ["LIMIT", 1]]
+  ↳ app/models/student.rb:39
+  [1m[36mCACHE StudentTeam Load (0.0ms)[0m  [1m[34mSELECT  "student_teams".* FROM "student_teams" WHERE "student_teams"."student_id" = ? AND (end_date IS NULL) ORDER BY "student_teams"."id" ASC LIMIT ?[0m  [["student_id", 2], ["LIMIT", 1]]
+  ↳ app/models/student.rb:40
+  [1m[36mCACHE Team Load (0.0ms)[0m  [1m[34mSELECT  "teams".* FROM "teams" WHERE "teams"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/models/student.rb:40
+  [1m[36mCACHE StudentTeam Exists (0.0ms)[0m  [1m[34mSELECT  1 AS one FROM "student_teams" WHERE "student_teams"."student_id" = ? AND (end_date IS NULL) LIMIT ?[0m  [["student_id", 2], ["LIMIT", 1]]
+  ↳ app/models/student.rb:39
+  [1m[36mCACHE StudentTeam Load (0.0ms)[0m  [1m[34mSELECT  "student_teams".* FROM "student_teams" WHERE "student_teams"."student_id" = ? AND (end_date IS NULL) ORDER BY "student_teams"."id" ASC LIMIT ?[0m  [["student_id", 2], ["LIMIT", 1]]
+  ↳ app/models/student.rb:40
+  [1m[36mCACHE Team Load (0.0ms)[0m  [1m[34mSELECT  "teams".* FROM "teams" WHERE "teams"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/models/student.rb:40
+  [1m[36mOrganization Load (0.2ms)[0m  [1m[34mSELECT  "organizations".* FROM "organizations" WHERE "organizations"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/views/students/_active_students.html.erb:17
+  [1m[36mStudentTeam Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "student_teams" WHERE "student_teams"."student_id" = ? AND (end_date IS NULL) LIMIT ?[0m  [["student_id", 5], ["LIMIT", 1]]
+  ↳ app/models/student.rb:39
+  [1m[36mStudentTeam Load (0.2ms)[0m  [1m[34mSELECT  "student_teams".* FROM "student_teams" WHERE "student_teams"."student_id" = ? AND (end_date IS NULL) ORDER BY "student_teams"."id" ASC LIMIT ?[0m  [["student_id", 5], ["LIMIT", 1]]
+  ↳ app/models/student.rb:40
+  [1m[36mTeam Load (0.1ms)[0m  [1m[34mSELECT  "teams".* FROM "teams" WHERE "teams"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/models/student.rb:40
+  [1m[36mCACHE StudentTeam Exists (0.0ms)[0m  [1m[34mSELECT  1 AS one FROM "student_teams" WHERE "student_teams"."student_id" = ? AND (end_date IS NULL) LIMIT ?[0m  [["student_id", 5], ["LIMIT", 1]]
+  ↳ app/models/student.rb:39
+  [1m[36mCACHE StudentTeam Load (0.0ms)[0m  [1m[34mSELECT  "student_teams".* FROM "student_teams" WHERE "student_teams"."student_id" = ? AND (end_date IS NULL) ORDER BY "student_teams"."id" ASC LIMIT ?[0m  [["student_id", 5], ["LIMIT", 1]]
+  ↳ app/models/student.rb:40
+  [1m[36mCACHE Team Load (0.0ms)[0m  [1m[34mSELECT  "teams".* FROM "teams" WHERE "teams"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/models/student.rb:40
+  [1m[36mCACHE StudentTeam Exists (0.0ms)[0m  [1m[34mSELECT  1 AS one FROM "student_teams" WHERE "student_teams"."student_id" = ? AND (end_date IS NULL) LIMIT ?[0m  [["student_id", 5], ["LIMIT", 1]]
+  ↳ app/models/student.rb:39
+  [1m[36mCACHE StudentTeam Load (0.0ms)[0m  [1m[34mSELECT  "student_teams".* FROM "student_teams" WHERE "student_teams"."student_id" = ? AND (end_date IS NULL) ORDER BY "student_teams"."id" ASC LIMIT ?[0m  [["student_id", 5], ["LIMIT", 1]]
+  ↳ app/models/student.rb:40
+  [1m[36mCACHE Team Load (0.0ms)[0m  [1m[34mSELECT  "teams".* FROM "teams" WHERE "teams"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/models/student.rb:40
+  [1m[36mCACHE Organization Load (0.0ms)[0m  [1m[34mSELECT  "organizations".* FROM "organizations" WHERE "organizations"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/views/students/_active_students.html.erb:17
+  [1m[36mStudentTeam Exists (0.3ms)[0m  [1m[34mSELECT  1 AS one FROM "student_teams" WHERE "student_teams"."student_id" = ? AND (end_date IS NULL) LIMIT ?[0m  [["student_id", 4], ["LIMIT", 1]]
+  ↳ app/models/student.rb:39
+  [1m[36mStudentTeam Load (0.4ms)[0m  [1m[34mSELECT  "student_teams".* FROM "student_teams" WHERE "student_teams"."student_id" = ? AND (end_date IS NULL) ORDER BY "student_teams"."id" ASC LIMIT ?[0m  [["student_id", 4], ["LIMIT", 1]]
+  ↳ app/models/student.rb:40
+  [1m[36mCACHE Team Load (0.0ms)[0m  [1m[34mSELECT  "teams".* FROM "teams" WHERE "teams"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/models/student.rb:40
+  [1m[36mCACHE StudentTeam Exists (0.0ms)[0m  [1m[34mSELECT  1 AS one FROM "student_teams" WHERE "student_teams"."student_id" = ? AND (end_date IS NULL) LIMIT ?[0m  [["student_id", 4], ["LIMIT", 1]]
+  ↳ app/models/student.rb:39
+  [1m[36mCACHE StudentTeam Load (0.0ms)[0m  [1m[34mSELECT  "student_teams".* FROM "student_teams" WHERE "student_teams"."student_id" = ? AND (end_date IS NULL) ORDER BY "student_teams"."id" ASC LIMIT ?[0m  [["student_id", 4], ["LIMIT", 1]]
+  ↳ app/models/student.rb:40
+  [1m[36mCACHE Team Load (0.0ms)[0m  [1m[34mSELECT  "teams".* FROM "teams" WHERE "teams"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/models/student.rb:40
+  [1m[36mCACHE StudentTeam Exists (0.0ms)[0m  [1m[34mSELECT  1 AS one FROM "student_teams" WHERE "student_teams"."student_id" = ? AND (end_date IS NULL) LIMIT ?[0m  [["student_id", 4], ["LIMIT", 1]]
+  ↳ app/models/student.rb:39
+  [1m[36mCACHE StudentTeam Load (0.0ms)[0m  [1m[34mSELECT  "student_teams".* FROM "student_teams" WHERE "student_teams"."student_id" = ? AND (end_date IS NULL) ORDER BY "student_teams"."id" ASC LIMIT ?[0m  [["student_id", 4], ["LIMIT", 1]]
+  ↳ app/models/student.rb:40
+  [1m[36mCACHE Team Load (0.0ms)[0m  [1m[34mSELECT  "teams".* FROM "teams" WHERE "teams"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/models/student.rb:40
+  [1m[36mCACHE Organization Load (0.0ms)[0m  [1m[34mSELECT  "organizations".* FROM "organizations" WHERE "organizations"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/views/students/_active_students.html.erb:17
+  [1m[36mStudentTeam Exists (0.6ms)[0m  [1m[34mSELECT  1 AS one FROM "student_teams" WHERE "student_teams"."student_id" = ? AND (end_date IS NULL) LIMIT ?[0m  [["student_id", 6], ["LIMIT", 1]]
+  ↳ app/models/student.rb:39
+  [1m[36mStudentTeam Load (0.2ms)[0m  [1m[34mSELECT  "student_teams".* FROM "student_teams" WHERE "student_teams"."student_id" = ? AND (end_date IS NULL) ORDER BY "student_teams"."id" ASC LIMIT ?[0m  [["student_id", 6], ["LIMIT", 1]]
+  ↳ app/models/student.rb:40
+  [1m[36mCACHE Team Load (0.0ms)[0m  [1m[34mSELECT  "teams".* FROM "teams" WHERE "teams"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/models/student.rb:40
+  [1m[36mCACHE StudentTeam Exists (0.0ms)[0m  [1m[34mSELECT  1 AS one FROM "student_teams" WHERE "student_teams"."student_id" = ? AND (end_date IS NULL) LIMIT ?[0m  [["student_id", 6], ["LIMIT", 1]]
+  ↳ app/models/student.rb:39
+  [1m[36mCACHE StudentTeam Load (0.0ms)[0m  [1m[34mSELECT  "student_teams".* FROM "student_teams" WHERE "student_teams"."student_id" = ? AND (end_date IS NULL) ORDER BY "student_teams"."id" ASC LIMIT ?[0m  [["student_id", 6], ["LIMIT", 1]]
+  ↳ app/models/student.rb:40
+  [1m[36mCACHE Team Load (0.0ms)[0m  [1m[34mSELECT  "teams".* FROM "teams" WHERE "teams"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/models/student.rb:40
+  [1m[36mCACHE StudentTeam Exists (0.0ms)[0m  [1m[34mSELECT  1 AS one FROM "student_teams" WHERE "student_teams"."student_id" = ? AND (end_date IS NULL) LIMIT ?[0m  [["student_id", 6], ["LIMIT", 1]]
+  ↳ app/models/student.rb:39
+  [1m[36mCACHE StudentTeam Load (0.0ms)[0m  [1m[34mSELECT  "student_teams".* FROM "student_teams" WHERE "student_teams"."student_id" = ? AND (end_date IS NULL) ORDER BY "student_teams"."id" ASC LIMIT ?[0m  [["student_id", 6], ["LIMIT", 1]]
+  ↳ app/models/student.rb:40
+  [1m[36mCACHE Team Load (0.0ms)[0m  [1m[34mSELECT  "teams".* FROM "teams" WHERE "teams"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/models/student.rb:40
+  [1m[36mCACHE Organization Load (0.0ms)[0m  [1m[34mSELECT  "organizations".* FROM "organizations" WHERE "organizations"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  ↳ app/views/students/_active_students.html.erb:17
+  [1m[36mStudentTeam Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "student_teams" WHERE "student_teams"."student_id" = ? AND (end_date IS NULL) LIMIT ?[0m  [["student_id", 1], ["LIMIT", 1]]
+  ↳ app/models/student.rb:39
+  [1m[36mStudentTeam Load (0.2ms)[0m  [1m[34mSELECT  "student_teams".* FROM "student_teams" WHERE "student_teams"."student_id" = ? AND (end_date IS NULL) ORDER BY "student_teams"."id" ASC LIMIT ?[0m  [["student_id", 1], ["LIMIT", 1]]
+  ↳ app/models/student.rb:40
+  [1m[36mCACHE Team Load (0.0ms)[0m  [1m[34mSELECT  "teams".* FROM "teams" WHERE "teams"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/models/student.rb:40
+  [1m[36mCACHE StudentTeam Exists (0.0ms)[0m  [1m[34mSELECT  1 AS one FROM "student_teams" WHERE "student_teams"."student_id" = ? AND (end_date IS NULL) LIMIT ?[0m  [["student_id", 1], ["LIMIT", 1]]
+  ↳ app/models/student.rb:39
+  [1m[36mCACHE StudentTeam Load (0.0ms)[0m  [1m[34mSELECT  "student_teams".* FROM "student_teams" WHERE "student_teams"."student_id" = ? AND (end_date IS NULL) ORDER BY "student_teams"."id" ASC LIMIT ?[0m  [["student_id", 1], ["LIMIT", 1]]
+  ↳ app/models/student.rb:40
+  [1m[36mCACHE Team Load (0.0ms)[0m  [1m[34mSELECT  "teams".* FROM "teams" WHERE "teams"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/models/student.rb:40
+  [1m[36mCACHE StudentTeam Exists (0.0ms)[0m  [1m[34mSELECT  1 AS one FROM "student_teams" WHERE "student_teams"."student_id" = ? AND (end_date IS NULL) LIMIT ?[0m  [["student_id", 1], ["LIMIT", 1]]
+  ↳ app/models/student.rb:39
+  [1m[36mCACHE StudentTeam Load (0.0ms)[0m  [1m[34mSELECT  "student_teams".* FROM "student_teams" WHERE "student_teams"."student_id" = ? AND (end_date IS NULL) ORDER BY "student_teams"."id" ASC LIMIT ?[0m  [["student_id", 1], ["LIMIT", 1]]
+  ↳ app/models/student.rb:40
+  [1m[36mCACHE Team Load (0.0ms)[0m  [1m[34mSELECT  "teams".* FROM "teams" WHERE "teams"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/models/student.rb:40
+  Rendered students/_active_students.html.erb (240.4ms)
+  [1m[36mStudent Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "students" WHERE "students"."active" != ? LIMIT ?[0m  [["active", 1], ["LIMIT", 1]]
+  ↳ app/views/students/_inactive_students.html.erb:1
+  [1m[36mStudent Load (0.2ms)[0m  [1m[34mSELECT "students".* FROM "students" WHERE "students"."active" != ? ORDER BY last_name, first_name[0m  [["active", 1]]
+  ↳ app/views/students/_inactive_students.html.erb:6
+  Rendered students/_inactive_students.html.erb (4.4ms)
+  Rendered partials/_add_new_object.html.erb (0.4ms)
+  Rendered partials/_index_structure.html.erb (251.6ms)
+  Rendered students/index.html.erb within layouts/application (264.8ms)
+  Rendered partials/_topbar.html.erb (0.6ms)
+  Rendered partials/_nav.html.erb (0.5ms)
+  Rendered partials/_flash.html.erb (0.4ms)
+  Rendered partials/_footer.html.erb (0.7ms)
+Completed 200 OK in 454ms (Views: 430.1ms | ActiveRecord: 8.6ms)
+
+
+Started GET "/students" for ::1 at 2021-04-07 11:20:37 +0300
+Processing by StudentsController#index as HTML
+  Rendering students/index.html.erb within layouts/application
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "students" WHERE "students"."active" = ?[0m  [["active", 1]]
+  ↳ app/views/students/_active_students.html.erb:1
+  [1m[36mStudent Load (0.3ms)[0m  [1m[34mSELECT  "students".* FROM "students" WHERE "students"."active" = ? ORDER BY last_name, first_name LIMIT ? OFFSET ?[0m  [["active", 1], ["LIMIT", 10], ["OFFSET", 0]]
+  ↳ app/views/students/_active_students.html.erb:14
+  [1m[36mOrganization Load (0.1ms)[0m  [1m[34mSELECT  "organizations".* FROM "organizations" WHERE "organizations"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  ↳ app/views/students/_active_students.html.erb:17
+  [1m[36mStudentTeam Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "student_teams" WHERE "student_teams"."student_id" = ? AND (end_date IS NULL) LIMIT ?[0m  [["student_id", 2], ["LIMIT", 1]]
+  ↳ app/models/student.rb:39
+  [1m[36mStudentTeam Load (0.2ms)[0m  [1m[34mSELECT  "student_teams".* FROM "student_teams" WHERE "student_teams"."student_id" = ? AND (end_date IS NULL) ORDER BY "student_teams"."id" ASC LIMIT ?[0m  [["student_id", 2], ["LIMIT", 1]]
+  ↳ app/models/student.rb:40
+  [1m[36mTeam Load (0.2ms)[0m  [1m[34mSELECT  "teams".* FROM "teams" WHERE "teams"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/models/student.rb:40
+  [1m[36mCACHE StudentTeam Exists (0.0ms)[0m  [1m[34mSELECT  1 AS one FROM "student_teams" WHERE "student_teams"."student_id" = ? AND (end_date IS NULL) LIMIT ?[0m  [["student_id", 2], ["LIMIT", 1]]
+  ↳ app/models/student.rb:39
+  [1m[36mCACHE StudentTeam Load (0.0ms)[0m  [1m[34mSELECT  "student_teams".* FROM "student_teams" WHERE "student_teams"."student_id" = ? AND (end_date IS NULL) ORDER BY "student_teams"."id" ASC LIMIT ?[0m  [["student_id", 2], ["LIMIT", 1]]
+  ↳ app/models/student.rb:40
+  [1m[36mCACHE Team Load (0.0ms)[0m  [1m[34mSELECT  "teams".* FROM "teams" WHERE "teams"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/models/student.rb:40
+  [1m[36mCACHE StudentTeam Exists (0.0ms)[0m  [1m[34mSELECT  1 AS one FROM "student_teams" WHERE "student_teams"."student_id" = ? AND (end_date IS NULL) LIMIT ?[0m  [["student_id", 2], ["LIMIT", 1]]
+  ↳ app/models/student.rb:39
+  [1m[36mCACHE StudentTeam Load (0.0ms)[0m  [1m[34mSELECT  "student_teams".* FROM "student_teams" WHERE "student_teams"."student_id" = ? AND (end_date IS NULL) ORDER BY "student_teams"."id" ASC LIMIT ?[0m  [["student_id", 2], ["LIMIT", 1]]
+  ↳ app/models/student.rb:40
+  [1m[36mCACHE Team Load (0.0ms)[0m  [1m[34mSELECT  "teams".* FROM "teams" WHERE "teams"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/models/student.rb:40
+  [1m[36mOrganization Load (0.2ms)[0m  [1m[34mSELECT  "organizations".* FROM "organizations" WHERE "organizations"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/views/students/_active_students.html.erb:17
+  [1m[36mStudentTeam Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "student_teams" WHERE "student_teams"."student_id" = ? AND (end_date IS NULL) LIMIT ?[0m  [["student_id", 5], ["LIMIT", 1]]
+  ↳ app/models/student.rb:39
+  [1m[36mStudentTeam Load (0.2ms)[0m  [1m[34mSELECT  "student_teams".* FROM "student_teams" WHERE "student_teams"."student_id" = ? AND (end_date IS NULL) ORDER BY "student_teams"."id" ASC LIMIT ?[0m  [["student_id", 5], ["LIMIT", 1]]
+  ↳ app/models/student.rb:40
+  [1m[36mTeam Load (0.1ms)[0m  [1m[34mSELECT  "teams".* FROM "teams" WHERE "teams"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/models/student.rb:40
+  [1m[36mCACHE StudentTeam Exists (0.0ms)[0m  [1m[34mSELECT  1 AS one FROM "student_teams" WHERE "student_teams"."student_id" = ? AND (end_date IS NULL) LIMIT ?[0m  [["student_id", 5], ["LIMIT", 1]]
+  ↳ app/models/student.rb:39
+  [1m[36mCACHE StudentTeam Load (0.0ms)[0m  [1m[34mSELECT  "student_teams".* FROM "student_teams" WHERE "student_teams"."student_id" = ? AND (end_date IS NULL) ORDER BY "student_teams"."id" ASC LIMIT ?[0m  [["student_id", 5], ["LIMIT", 1]]
+  ↳ app/models/student.rb:40
+  [1m[36mCACHE Team Load (0.0ms)[0m  [1m[34mSELECT  "teams".* FROM "teams" WHERE "teams"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/models/student.rb:40
+  [1m[36mCACHE StudentTeam Exists (0.0ms)[0m  [1m[34mSELECT  1 AS one FROM "student_teams" WHERE "student_teams"."student_id" = ? AND (end_date IS NULL) LIMIT ?[0m  [["student_id", 5], ["LIMIT", 1]]
+  ↳ app/models/student.rb:39
+  [1m[36mCACHE StudentTeam Load (0.0ms)[0m  [1m[34mSELECT  "student_teams".* FROM "student_teams" WHERE "student_teams"."student_id" = ? AND (end_date IS NULL) ORDER BY "student_teams"."id" ASC LIMIT ?[0m  [["student_id", 5], ["LIMIT", 1]]
+  ↳ app/models/student.rb:40
+  [1m[36mCACHE Team Load (0.0ms)[0m  [1m[34mSELECT  "teams".* FROM "teams" WHERE "teams"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/models/student.rb:40
+  [1m[36mCACHE Organization Load (0.0ms)[0m  [1m[34mSELECT  "organizations".* FROM "organizations" WHERE "organizations"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/views/students/_active_students.html.erb:17
+  [1m[36mStudentTeam Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "student_teams" WHERE "student_teams"."student_id" = ? AND (end_date IS NULL) LIMIT ?[0m  [["student_id", 4], ["LIMIT", 1]]
+  ↳ app/models/student.rb:39
+  [1m[36mStudentTeam Load (0.2ms)[0m  [1m[34mSELECT  "student_teams".* FROM "student_teams" WHERE "student_teams"."student_id" = ? AND (end_date IS NULL) ORDER BY "student_teams"."id" ASC LIMIT ?[0m  [["student_id", 4], ["LIMIT", 1]]
+  ↳ app/models/student.rb:40
+  [1m[36mCACHE Team Load (0.0ms)[0m  [1m[34mSELECT  "teams".* FROM "teams" WHERE "teams"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/models/student.rb:40
+  [1m[36mCACHE StudentTeam Exists (0.0ms)[0m  [1m[34mSELECT  1 AS one FROM "student_teams" WHERE "student_teams"."student_id" = ? AND (end_date IS NULL) LIMIT ?[0m  [["student_id", 4], ["LIMIT", 1]]
+  ↳ app/models/student.rb:39
+  [1m[36mCACHE StudentTeam Load (0.0ms)[0m  [1m[34mSELECT  "student_teams".* FROM "student_teams" WHERE "student_teams"."student_id" = ? AND (end_date IS NULL) ORDER BY "student_teams"."id" ASC LIMIT ?[0m  [["student_id", 4], ["LIMIT", 1]]
+  ↳ app/models/student.rb:40
+  [1m[36mCACHE Team Load (0.0ms)[0m  [1m[34mSELECT  "teams".* FROM "teams" WHERE "teams"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/models/student.rb:40
+  [1m[36mCACHE StudentTeam Exists (0.0ms)[0m  [1m[34mSELECT  1 AS one FROM "student_teams" WHERE "student_teams"."student_id" = ? AND (end_date IS NULL) LIMIT ?[0m  [["student_id", 4], ["LIMIT", 1]]
+  ↳ app/models/student.rb:39
+  [1m[36mCACHE StudentTeam Load (0.0ms)[0m  [1m[34mSELECT  "student_teams".* FROM "student_teams" WHERE "student_teams"."student_id" = ? AND (end_date IS NULL) ORDER BY "student_teams"."id" ASC LIMIT ?[0m  [["student_id", 4], ["LIMIT", 1]]
+  ↳ app/models/student.rb:40
+  [1m[36mCACHE Team Load (0.0ms)[0m  [1m[34mSELECT  "teams".* FROM "teams" WHERE "teams"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/models/student.rb:40
+  [1m[36mCACHE Organization Load (0.0ms)[0m  [1m[34mSELECT  "organizations".* FROM "organizations" WHERE "organizations"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/views/students/_active_students.html.erb:17
+  [1m[36mStudentTeam Exists (0.4ms)[0m  [1m[34mSELECT  1 AS one FROM "student_teams" WHERE "student_teams"."student_id" = ? AND (end_date IS NULL) LIMIT ?[0m  [["student_id", 6], ["LIMIT", 1]]
+  ↳ app/models/student.rb:39
+  [1m[36mStudentTeam Load (0.2ms)[0m  [1m[34mSELECT  "student_teams".* FROM "student_teams" WHERE "student_teams"."student_id" = ? AND (end_date IS NULL) ORDER BY "student_teams"."id" ASC LIMIT ?[0m  [["student_id", 6], ["LIMIT", 1]]
+  ↳ app/models/student.rb:40
+  [1m[36mCACHE Team Load (0.0ms)[0m  [1m[34mSELECT  "teams".* FROM "teams" WHERE "teams"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/models/student.rb:40
+  [1m[36mCACHE StudentTeam Exists (0.0ms)[0m  [1m[34mSELECT  1 AS one FROM "student_teams" WHERE "student_teams"."student_id" = ? AND (end_date IS NULL) LIMIT ?[0m  [["student_id", 6], ["LIMIT", 1]]
+  ↳ app/models/student.rb:39
+  [1m[36mCACHE StudentTeam Load (0.0ms)[0m  [1m[34mSELECT  "student_teams".* FROM "student_teams" WHERE "student_teams"."student_id" = ? AND (end_date IS NULL) ORDER BY "student_teams"."id" ASC LIMIT ?[0m  [["student_id", 6], ["LIMIT", 1]]
+  ↳ app/models/student.rb:40
+  [1m[36mCACHE Team Load (0.0ms)[0m  [1m[34mSELECT  "teams".* FROM "teams" WHERE "teams"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/models/student.rb:40
+  [1m[36mCACHE StudentTeam Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "student_teams" WHERE "student_teams"."student_id" = ? AND (end_date IS NULL) LIMIT ?[0m  [["student_id", 6], ["LIMIT", 1]]
+  ↳ app/models/student.rb:39
+  [1m[36mCACHE StudentTeam Load (0.0ms)[0m  [1m[34mSELECT  "student_teams".* FROM "student_teams" WHERE "student_teams"."student_id" = ? AND (end_date IS NULL) ORDER BY "student_teams"."id" ASC LIMIT ?[0m  [["student_id", 6], ["LIMIT", 1]]
+  ↳ app/models/student.rb:40
+  [1m[36mCACHE Team Load (0.0ms)[0m  [1m[34mSELECT  "teams".* FROM "teams" WHERE "teams"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/models/student.rb:40
+  [1m[36mCACHE Organization Load (0.0ms)[0m  [1m[34mSELECT  "organizations".* FROM "organizations" WHERE "organizations"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  ↳ app/views/students/_active_students.html.erb:17
+  [1m[36mStudentTeam Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "student_teams" WHERE "student_teams"."student_id" = ? AND (end_date IS NULL) LIMIT ?[0m  [["student_id", 1], ["LIMIT", 1]]
+  ↳ app/models/student.rb:39
+  [1m[36mStudentTeam Load (0.1ms)[0m  [1m[34mSELECT  "student_teams".* FROM "student_teams" WHERE "student_teams"."student_id" = ? AND (end_date IS NULL) ORDER BY "student_teams"."id" ASC LIMIT ?[0m  [["student_id", 1], ["LIMIT", 1]]
+  ↳ app/models/student.rb:40
+  [1m[36mCACHE Team Load (0.0ms)[0m  [1m[34mSELECT  "teams".* FROM "teams" WHERE "teams"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/models/student.rb:40
+  [1m[36mCACHE StudentTeam Exists (0.0ms)[0m  [1m[34mSELECT  1 AS one FROM "student_teams" WHERE "student_teams"."student_id" = ? AND (end_date IS NULL) LIMIT ?[0m  [["student_id", 1], ["LIMIT", 1]]
+  ↳ app/models/student.rb:39
+  [1m[36mCACHE StudentTeam Load (0.0ms)[0m  [1m[34mSELECT  "student_teams".* FROM "student_teams" WHERE "student_teams"."student_id" = ? AND (end_date IS NULL) ORDER BY "student_teams"."id" ASC LIMIT ?[0m  [["student_id", 1], ["LIMIT", 1]]
+  ↳ app/models/student.rb:40
+  [1m[36mCACHE Team Load (0.0ms)[0m  [1m[34mSELECT  "teams".* FROM "teams" WHERE "teams"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/models/student.rb:40
+  [1m[36mCACHE StudentTeam Exists (0.0ms)[0m  [1m[34mSELECT  1 AS one FROM "student_teams" WHERE "student_teams"."student_id" = ? AND (end_date IS NULL) LIMIT ?[0m  [["student_id", 1], ["LIMIT", 1]]
+  ↳ app/models/student.rb:39
+  [1m[36mCACHE StudentTeam Load (0.0ms)[0m  [1m[34mSELECT  "student_teams".* FROM "student_teams" WHERE "student_teams"."student_id" = ? AND (end_date IS NULL) ORDER BY "student_teams"."id" ASC LIMIT ?[0m  [["student_id", 1], ["LIMIT", 1]]
+  ↳ app/models/student.rb:40
+  [1m[36mCACHE Team Load (0.0ms)[0m  [1m[34mSELECT  "teams".* FROM "teams" WHERE "teams"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/models/student.rb:40
+  Rendered students/_active_students.html.erb (136.0ms)
+  [1m[36mStudent Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "students" WHERE "students"."active" != ? LIMIT ?[0m  [["active", 1], ["LIMIT", 1]]
+  ↳ app/views/students/_inactive_students.html.erb:1
+  [1m[36mStudent Load (0.2ms)[0m  [1m[34mSELECT "students".* FROM "students" WHERE "students"."active" != ? ORDER BY last_name, first_name[0m  [["active", 1]]
+  ↳ app/views/students/_inactive_students.html.erb:6
+  Rendered students/_inactive_students.html.erb (5.4ms)
+  Rendered partials/_add_new_object.html.erb (0.5ms)
+  Rendered partials/_index_structure.html.erb (148.0ms)
+  Rendered students/index.html.erb within layouts/application (152.4ms)
+  Rendered partials/_topbar.html.erb (0.5ms)
+  Rendered partials/_nav.html.erb (0.5ms)
+  Rendered partials/_flash.html.erb (0.4ms)
+  Rendered partials/_footer.html.erb (0.7ms)
+Completed 200 OK in 252ms (Views: 242.2ms | ActiveRecord: 4.3ms)
+
+
+Started GET "/teams" for ::1 at 2021-04-07 11:20:38 +0300
+Processing by TeamsController#index as HTML
+  Rendering teams/index.html.erb within layouts/application
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "teams" WHERE "teams"."active" = ? AND "teams"."division" = ?[0m  [["active", 1], ["division", "senior"]]
+  ↳ app/views/teams/_active_senior_teams.html.erb:1
+  [1m[36mTeam Load (0.2ms)[0m  [1m[34mSELECT  "teams".* FROM "teams" WHERE "teams"."active" = ? AND "teams"."division" = ? ORDER BY "teams"."name" ASC LIMIT ? OFFSET ?[0m  [["active", 1], ["division", "senior"], ["LIMIT", 10], ["OFFSET", 0]]
+  ↳ app/views/teams/_active_senior_teams.html.erb:14
+  [1m[36mOrganization Load (0.1ms)[0m  [1m[34mSELECT  "organizations".* FROM "organizations" WHERE "organizations"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  ↳ app/views/teams/_active_senior_teams.html.erb:17
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "student_teams" WHERE "student_teams"."team_id" = ? AND (end_date IS NULL)[0m  [["team_id", 1]]
+  ↳ app/views/teams/_active_senior_teams.html.erb:18
+  Rendered teams/_active_senior_teams.html.erb (16.3ms)
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "teams" WHERE "teams"."active" = ? AND "teams"."division" = ?[0m  [["active", 1], ["division", "junior"]]
+  ↳ app/views/teams/_active_junior_teams.html.erb:1
+  [1m[36mTeam Load (0.4ms)[0m  [1m[34mSELECT  "teams".* FROM "teams" WHERE "teams"."active" = ? AND "teams"."division" = ? ORDER BY "teams"."name" ASC LIMIT ? OFFSET ?[0m  [["active", 1], ["division", "junior"], ["LIMIT", 10], ["OFFSET", 0]]
+  ↳ app/views/teams/_active_junior_teams.html.erb:14
+  [1m[36mOrganization Load (0.2ms)[0m  [1m[34mSELECT  "organizations".* FROM "organizations" WHERE "organizations"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/views/teams/_active_junior_teams.html.erb:17
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "student_teams" WHERE "student_teams"."team_id" = ? AND (end_date IS NULL)[0m  [["team_id", 2]]
+  ↳ app/views/teams/_active_junior_teams.html.erb:18
+  Rendered teams/_active_junior_teams.html.erb (11.0ms)
+  [1m[36mTeam Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "teams" WHERE "teams"."active" != ? LIMIT ?[0m  [["active", 1], ["LIMIT", 1]]
+  ↳ app/views/teams/_inactive_teams.html.erb:1
+  [1m[36mTeam Load (0.2ms)[0m  [1m[34mSELECT "teams".* FROM "teams" WHERE "teams"."active" != ? ORDER BY "teams"."name" ASC[0m  [["active", 1]]
+  ↳ app/views/teams/_inactive_teams.html.erb:6
+  Rendered teams/_inactive_teams.html.erb (5.3ms)
+  Rendered partials/_add_new_object.html.erb (0.6ms)
+  Rendered partials/_index_structure.html.erb (47.9ms)
+  Rendered teams/index.html.erb within layouts/application (52.8ms)
+  Rendered partials/_topbar.html.erb (0.5ms)
+  Rendered partials/_nav.html.erb (0.6ms)
+  Rendered partials/_flash.html.erb (0.5ms)
+  Rendered partials/_footer.html.erb (0.7ms)
+Completed 200 OK in 164ms (Views: 157.3ms | ActiveRecord: 2.2ms)
+
+
