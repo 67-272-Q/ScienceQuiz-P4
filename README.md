@@ -51,11 +51,11 @@ This phase we will continue our project to develop the business logic for the Sc
 
 11. You have a private repository on GitHub for this project which is accessible (initially) only to you and the teaching staff.  If you change the visibility of your repository in any way or give any other individuals outside the faculty and Head TAs access (directly or indirectly) to this repository, you can expect an automatic zero for this project, an additional one-letter grade drop on the final grade, and this will be considered an academic violation that will be reported to the University.  _We will use the full range of monitoring tools that GitHub provided to classrooms to actively scan for such violations._
 
-12. Your project will be turned in via GitHub and Gradescope no later than **11:59pm on Thursday, April 22, 2021**. Any late submissions will be not be considered. Again, if you have questions regarding this project, please post them on Piazza or ask someone well in advance of the turn-in date. Waiting until the day before it is due to get help is unwise -- you risk not getting a timely response that close to the deadline and will not be given an extension because of such an error.
+12. Your project will be turned in via GitHub and Gradescope no later than **5 pm on Thursday, April 22, 2021**. Any late submissions will be not be considered. Again, if you have questions regarding this project, please post them on Piazza or ask someone well in advance of the turn-in date. Waiting until the day before it is due to get help is unwise -- you risk not getting a timely response that close to the deadline and will not be given an extension because of such an error.
 
 **Checkpoint for this phase**:
 
-- _Checkpoint:_  By **Sunday, April 11th, 5 PM**, you must:
+- _Checkpoint:_  By **Thursday, April 15th, 5 PM**, you must:
 
 	1. complete the `User` model along with its tests as well as (1) create the new migration to modify the teams table and (2) update `Team` model and related testing files so that all `Team` tests pass. Only the tests in `UserTest` (not its affilated files) and `TeamTest` (not its affilated files) will be run. 
 	2. complete the `Quiz` model along with its tests. Revisions to `Organization` and `Student` models must be complete.  Only the tests in `QuizTest`, `OrganizationTest`, and `StudentTest` will be checked; none of the affiliated test files associated with these models will be run.
